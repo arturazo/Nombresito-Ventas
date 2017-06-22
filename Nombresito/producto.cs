@@ -29,4 +29,23 @@ namespace Nombresito
         public virtual ICollection<historialcompra> historialcompra { get; set; }
         public virtual ICollection<historialventa> historialventa { get; set; }
     }
+    public void ingresarProducto(producto prodIngresar)
+        {
+            BD bd = new BD();
+            var tablaProd = bd.producto;
+            bool existe = false;
+            foreach(var producto in tablaProd)
+            {
+                if(producto.id==prodIngresar.id)
+                {
+                    existe = true;
+                    producto.stock = producto.stock + prodIngresar.stock;
+                }
+            }
+            if(existe==false)
+            {
+                bd.producto.Add(prodIngresar);
+            }
+            //esta linea guarda los cambios en la base de datos
+            bd.SaveChanges();
 }
